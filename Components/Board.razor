@@ -1,13 +1,15 @@
+@using System.Drawing
 @inject GameState State
 <h3>Board</h3>
 <HeadContent>
 	<style>
-			:root {
-				--board-bg: yellow;
+			:root
+			{
+				--board-bg: @ColorTranslator.ToHtml(BoardColor);
 				/** the color of the board **/
-				--player1: red;
+				--player1: @ColorTranslator.ToHtml(Player1Color);
 				/** Player 1's piece color **/
-				--player2: blue;
+				--player2: @ColorTranslator.ToHtml(Player2Color);
 				/** Player 2's piece color **/
 			}
 	</style>
@@ -46,6 +48,14 @@
 	private string errorMessage = string.Empty;
 	private string CurrentTurn => (winnerMessage == string.Empty) ? $"Player {State.PlayerTurn}'s Turn" : "";
 	private string ResetStyle => (winnerMessage == string.Empty) ? "display: none;" : "";
+	[Parameter]
+	public Color BoardColor { get; set; } = ColorTranslator.FromHtml("yellow");
+
+	[Parameter]
+	public Color Player1Color { get; set; } = ColorTranslator.FromHtml("red");
+
+	[Parameter]
+	public Color Player2Color { get; set; } = ColorTranslator.FromHtml("blue");
 	protected override void OnInitialized()
 	{
 		State.ResetBoard();
